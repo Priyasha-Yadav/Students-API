@@ -1,15 +1,23 @@
 const express = require('express');
 const { MongoClient } = require('mongodb');
-const cors = require('cors');  
+const cors = require('cors');
 const app = express();
 const port = 3000;
 
-const uri = "mongodb+srv://kuch_bhi:kuch_bhi@cluster0.advb4.mongodb.net/"
+const uri = "mongodb+srv://kuch_bhi:kuch_bhi@cluster0.advb4.mongodb.net/";
 const dbName = "cg";
 
 app.use(express.json());
 
-app.use(cors());
+const corsOptions = {
+    origin: 'http://localhost:5173', 
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true, 
+};
+
+app.use(cors(corsOptions));
+
 let db, students;
 
 async function initializeDatabase() {
